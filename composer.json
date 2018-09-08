@@ -1,0 +1,46 @@
+{
+    "name": "wbgym/pagenews-bundle",
+    "type": "contao-bundle",
+    "description": "Displays tagged news on every page with the codefog/contao-news_categories bundle..",
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Webteam WBGym",
+            "homepage": "https://wbgym.de"
+        }
+    ],
+    "require": {
+        "php": "^5.6|^7.0",
+        "symfony/framework-bundle": "^3.3",
+        "contao/core-bundle": "^4.4",
+        "wbgym/school-bundle": "dev-master",
+        "codefog/contao-news_categories": "^3.0"
+    },
+    "require-dev": {
+        "contao/manager-plugin": "^2.0"
+    },
+    "conflict": {
+        "contao/core": "*",
+        "contao/manager-plugin": "<2.0 || >=3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wbgym\\PageNewsBundle\\": "src/"
+        },
+        "classmap": [
+            "src/Resources/contao/"
+        ],
+        "exclude-from-classmap": [
+            "src/Resources/contao/config/",
+            "src/Resources/contao/dca/",
+            "src/Resources/contao/languages/",
+            "src/Resources/contao/templates/"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "extra": {
+        "contao-manager-plugin": "Wbgym\\PageNewsBundle\\ContaoManager\\Plugin"
+    }
+}
