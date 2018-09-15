@@ -1,0 +1,19 @@
+services:
+    _defaults:
+        public: true
+
+    _instanceof:
+        Contao\CoreBundle\Framework\FrameworkAwareInterface:
+            calls:
+                - ["setFramework", ["@contao.framework"]]
+
+    wbgym_pagenews.listener.news:
+        class: Wbgym\PageNewsBundle\EventListener\NewsListener
+        arguments: 
+            - "@codefog_news_categories.listener.news"
+
+    wbgym_pagenews.listener.inserttags:
+        class: Wbgym\PageNewsBundle\EventListener\InsertTagsListener
+
+    wbgym_pagenews.listener.template:
+        class: Wbgym\PageNewsBundle\EventListener\TemplateListener
