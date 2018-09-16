@@ -43,15 +43,19 @@ class NewsListener
      */
     public function onNewsListCountItems($archives, $featured, ModuleNewsList $module)
     {
-        // Consider pre-filtered results from Codefog bundle
-        $res = $this->objCodefogListener->onNewsListCountItems($archives, $featured, $module);
-        
-        if ($res == 0)
+        if ($module->news_filterDate != 0)
         {
-            return 0;
-        }
+            // Consider pre-filtered results from Codefog bundle
+            $res = $this->objCodefogListener->onNewsListCountItems($archives, $featured, $module);
+            
+            if ($res == 0)
+            {
+                return 0;
+            }
 
-        return count($this->onNewsListFetchItems($archives, $featured, 0, 0, $module));
+            return count($this->onNewsListFetchItems($archives, $featured, 0, 0, $module));
+        }
+        return false;
     }
 
     /**
