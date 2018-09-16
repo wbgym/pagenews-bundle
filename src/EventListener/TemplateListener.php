@@ -12,6 +12,7 @@
 namespace Wbgym\PageNewsBundle\EventListener;
 
 use Codefog\NewsCategoriesBundle\Model\NewsCategoryModel;
+use Wbgym\PageNewsBundle\Teaser;
 
 class TemplateListener
 {
@@ -34,7 +35,8 @@ class TemplateListener
     }
 
     /**
-     * Add teaser to the news template.
+     * Add a teaser to the news template if no teaser is set.
+     * Additionally add a cut-of teaser with max. 200 chars to template.
      * 
      * @param Template  $objTemplate
      * @param array     $arrRow
@@ -44,32 +46,18 @@ class TemplateListener
      */
     public function onParseArticles($objTemplate, $arrRow, $objModule) 
     {
-        if ($objTemplate->teaser)
+        if (!$objTemplate->teaser)
         {
-            $strNews = $objTemplate->teaser;
-        }
-        else 
-        {
-            $strNews = $objTemplate->text;
-        }
+            // Generate teaser part
+            $objTemplate->teaser = Teaser::generateTeaser($objTemplate->text);
 
-        $objTemplate->wbTeaser = $this->generateTeaser($strNews, 200);
-    }
-
-    /**
-     * Generate one-line Teaser from News markup
-     * without any HTML markup (line breaks, etc.)
-     * 
-     * @param string    $strNews
-     * @param int       $length     maximum length of chars (hard break)
-     * @return string
-     */
-    private function generateTeaser($strNews, $length)
-    {
-        $startPos = strpos($strNews, '<p>');
-        $strNews = substr($strNews, $startPos);
-        $strStripped = strip_tags($strNews);
+            // Remove teaser part from full text for consistency
+            $objTemplate->text = str_replace($objTemplate->teaser, '', $objTemplate->text);
+        }
         
-        return substr($strStripped, 0, $length);
+        // Generate cutTeaser
+        $objTemplate->cutTeaser = Teaser::generateCutTeaser($objTemplate->teaser);
     }
+
+
 }
