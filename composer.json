@@ -14,7 +14,7 @@
         "symfony/framework-bundle": "^3.3",
         "contao/core-bundle": "^4.4",
         "contao/news-bundle": "^4.4",
-        "wbgym/school-bundle": "dev-master",
+        "wbgym/school-bundle": "^1.0",
         "codefog/contao-news_categories": "^3.0"
     },
     "require-dev": {
