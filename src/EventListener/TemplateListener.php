@@ -66,7 +66,6 @@ class TemplateListener
             {
                 $objActive = NewsCategoryModel::findBy('alias', $filter);
                 $template->activeItem = $objActive;
-                dump($objActive);
             }
         }
     }
