@@ -39,7 +39,7 @@ class NewsListener
      * @param bool|null          $featured
      * @param ModuleNewsList     $module
      * 
-     * @return Collection|null
+     * @return int|bool
      */
     public function onNewsListCountItems($archives, $featured, ModuleNewsList $module)
     {
@@ -53,7 +53,7 @@ class NewsListener
                 return 0;
             }
 
-            return count($this->onNewsListFetchItems($archives, $featured, 0, 0, $module));
+            return $this->onNewsListFetchItems($archives, $featured, 0, 0, $module) ? $this->onNewsListFetchItems($archives, $featured, 0, 0, $module)->count() : 0;
         }
         return false;
     }
@@ -67,7 +67,7 @@ class NewsListener
      * @param int               $offset
      * @param ModuleNewsList    $module
      *
-     * @return Collection|null
+     * @return Collection|null|bool
      */
     public function onNewsListFetchItems(array $archives, $featured, $limit, $offset, ModuleNewsList $module)
     {
@@ -93,7 +93,7 @@ class NewsListener
                 }
             }
 
-            if ($arrModelsRes != null)
+            if ($arrModelsRes !== null)
             {
                 return new Collection($arrModelsRes, 'tl_news');
             }
